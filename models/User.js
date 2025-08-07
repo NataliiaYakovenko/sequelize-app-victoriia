@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,18 +11,52 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    passwordHush: DataTypes.STRING,
-    birthday: DataTypes.DATEONLY,
-    gender: DataTypes.STRING,
-    image: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-    underscored: true,
-  });
+  User.init(
+    {
+      firstName: {
+        type: DataTypes.STRING(64),
+        allowNull: false,
+        validate: {
+          is: /^[A-Z][a-z]+$/,
+          len: [2, 64],
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING(64),
+        validate: {
+          is: /^[A-Z][a-z]+$/,
+          len: [2, 64],
+        },
+      },
+      email: {
+        type: DataTypes.STRING(100),
+        unique: true,
+        allowNull: false,
+        validate: { isEmail: true },
+      },
+      passwHash: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      birthday: {
+        type: DataTypes.DATEONLY,
+        validate: {
+          isBefore: new Date().toISOString(),
+        },
+      },
+      gender: {
+        type: DataTypes.STRING(10),
+        validate: {
+          isIn: [['male', 'female', 'other']],
+        },
+      },
+      image: DataTypes.STRING(255),
+    },
+    {
+      sequelize,
+      modelName: 'User',
+      underscored: true,
+    }
+  );
   return User;
 };
