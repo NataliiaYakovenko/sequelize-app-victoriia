@@ -25,7 +25,7 @@ module.exports.createUsers = async (req, res, next) => {
       'updatedAt',
     ]);
 
-    res.status(201).json(preparedUser);
+    res.status(201).json({data:preparedUser});
   } catch (error) {
     next(error);
   }
