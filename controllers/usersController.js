@@ -1,4 +1,12 @@
+const { hashSync } = require('bcrypt');
 const { User } = require('../models');
+
+const passw = '123';
+const HASH_SALT = 10;
+const paswwHash = hashSync(passw, HASH_SALT);
+console.log(paswwHash);
+
+
 
 module.exports.createUsers = async (req, res, next) => {
   try {
@@ -8,8 +16,6 @@ module.exports.createUsers = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 module.exports.getUsers = async (req, res, next) => {
   try {
