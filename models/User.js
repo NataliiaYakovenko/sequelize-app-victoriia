@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       passwordHush: {
         type: DataTypes.STRING,
         allowNull: false,
+        field: 'password_hush',
       },
       birthday: {
         type: DataTypes.DATEONLY,
