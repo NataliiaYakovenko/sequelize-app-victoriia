@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: { isEmail: true },
       },
-      passwHash: {
+      passwordHush: {
         type: DataTypes.STRING,
         allowNull: false,
       },

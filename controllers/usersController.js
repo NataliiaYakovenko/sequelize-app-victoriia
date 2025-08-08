@@ -1,9 +1,15 @@
+const { User } = require('../models');
+
 module.exports.createUsers = async (req, res, next) => {
   try {
+    const createdUser = await User.create(req.body);
+    res.status(201).json(createdUser);
   } catch (error) {
     next(error);
   }
 };
+
+
 
 module.exports.getUsers = async (req, res, next) => {
   try {
