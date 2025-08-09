@@ -2,18 +2,10 @@ const { hashSync } = require('bcrypt');
 const _ = require('lodash');
 const { User } = require('../models');
 
-
 module.exports.createUsers = async (req, res, next) => {
   const { body } = req;
   try {
-
     const createdUser = await User.create(body);
-
-    //видалити сек"юрні властивості
-    // const preparedUser = { ...createdUser.get() };
-    // delete preparedUser.passwordHush;
-    // delete preparedUser.createdAt;
-    // delete preparedUser.updatedAt;
 
     const preparedUser = _.omit(createdUser.get(), [
       'passwordHush',
@@ -87,6 +79,45 @@ module.exports.updateUserById = async (req, res, next) => {
     res.status(201).json({ data: preparedUser });
   } catch (error) {
     next(error);
+  }
+};
+
+module.exports.updateOrCreateUser = async (req, res, next) => {
+  // перевірити, чи існує 1+1=2-
+  // + оновити
+  // - створити
+
+  // спробувати оновити 1
+  // якщо updatedUsersCount === 1, то все, 200      1+0=1+
+  // якщо updatedUsersCount === 0, то створити, 201 1+1=2+
+
+  const {
+    body,
+    params: { id },
+  } = req;
+
+  try {
+    const updatedUsersCount = await User.update(body, {
+      where: { id },
+      raw: true,
+      returning: true,
+    });
+
+    if (!updatedUsersCount) {
+      // create
+      body.id = id;
+      return next();
+    }
+
+    const preparedUser = _.omit(updatedUsersCount, [
+      'passwHash',
+      'createdAt',
+      'updatedAt',
+    ]);
+
+    res.status(200).send({ data: preparedUser });
+  } catch (err) {
+    next(err);
   }
 };
 

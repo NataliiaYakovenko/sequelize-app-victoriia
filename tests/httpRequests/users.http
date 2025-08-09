@@ -30,3 +30,16 @@ Content-Type: application/json
     "birthday": "1983-10-14",
     "gender": "female"
 }
+
+
+PUT http://localhost:5000/api/users/4
+Content-Type: application/json
+
+{
+    "firstName": "Den",
+    "lastName": "Denov",
+    "email": "denoooo@gmail.com",
+    "passwordHush": "1234",
+    "birthday": "1983-10-23",
+    "gender": "male"
+}
