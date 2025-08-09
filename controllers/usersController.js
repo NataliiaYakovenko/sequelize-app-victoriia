@@ -2,15 +2,11 @@ const { hashSync } = require('bcrypt');
 const _ = require('lodash');
 const { User } = require('../models');
 
-// const passw = '123';
-const HASH_SALT = 10;
-// const paswwHash = hashSync(passw, HASH_SALT);
-// console.log(paswwHash);
 
 module.exports.createUsers = async (req, res, next) => {
   const { body } = req;
   try {
-    body.passwordHush = hashSync(body.passwordHush, HASH_SALT);
+
     const createdUser = await User.create(body);
 
     //видалити сек"юрні властивості
@@ -70,7 +66,6 @@ module.exports.updateUserById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    body.passwordHush = hashSync(body.passwordHush, HASH_SALT);
     const updatedUser = await User.update(body, {
       where: { id },
       raw: true,
