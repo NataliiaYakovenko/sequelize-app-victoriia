@@ -10,6 +10,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      groupId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'groups',
+          key: 'id',
+        },
+        onDelete: 'RESTRICT',
+        onUpdate: 'CASCADE',
+      },
       first_name: {
         type: Sequelize.STRING,
         allowNull: false,
