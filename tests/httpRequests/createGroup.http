@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/groups
+Content-Type: application/json
+
+{
+  "title":"Nat2",
+  "enteredAt":"2022-09-01"
+}

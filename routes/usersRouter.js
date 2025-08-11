@@ -4,6 +4,7 @@ const { paginate } = require('../middleware');
 
 const userRouter = Router();
 
+
 userRouter
   .route('/')
   .get(paginate.paginateUsers, usersController.getUsers)
