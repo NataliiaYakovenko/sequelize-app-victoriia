@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
         through: 'User_Subject',
         foreignKey: 'userId',
       });
+      User.hasMany(models.Task, {
+        foreignKey: {
+          name: 'user_id',
+          allowNull: false,
+        },
+        onDelete: 'RESTRICT',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   User.init(
