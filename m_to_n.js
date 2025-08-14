@@ -13,7 +13,6 @@ const usSubj4 = { userId: 2, subjectId: 2, mark: 88 };
 
 // await Subject.create(subject1);
 // await Subject.create(subject2);
-
 // await User_Subject.create(usSubj1);
 // await User_Subject.create(usSubj2);
 // await User_Subject.create(usSubj3);
