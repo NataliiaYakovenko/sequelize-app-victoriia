@@ -2,6 +2,7 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
+    "groupId":1,
     "firstName": "Bobi",
     "lastName": "Huos",
     "email": "po76iii7@gmail.com",
