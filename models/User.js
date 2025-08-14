@@ -3,8 +3,6 @@ const { Model } = require('sequelize');
 const { hashSync } = require('bcrypt');
 const { GENDERS } = require('../constants');
 
-const HASH_SALT = 10;
-
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -51,7 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: 'password_hush',
         set(value) {
-          this.setDataValue('passwordHush', hashSync(value, HASH_SALT));
+          this.setDataValue(
+            'passwordHush',
+            hashSync(value, number(process.env.HASH_SALT))
+          );
         },
       },
       birthday: {
