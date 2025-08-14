@@ -1,6 +1,6 @@
 const { hashSync } = require('bcrypt');
 const _ = require('lodash');
-const { User } = require('../models');
+const { User } = require('../models/User');
 
 module.exports.createUsers = async (req, res, next) => {
   const { body } = req;

@@ -5,7 +5,7 @@ Content-Type: application/json
     "groupId":1,
     "firstName": "Bobi",
     "lastName": "Huos",
-    "email": "po76iii7@gmail.com",
+    "email": "po76ii7@gmail.com",
     "passwordHush": "123",
     "birthday": "1987-08-26",
     "gender": "female"
@@ -44,3 +44,6 @@ Content-Type: application/json
     "birthday": "1983-10-23",
     "gender": "male"
 }
+
+
+GET http://localhost:5000/api/users/1/tasks
