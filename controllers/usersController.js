@@ -12,7 +12,6 @@ module.exports.createUsers = async (req, res, next) => {
       'createdAt',
       'updatedAt',
     ]);
-
     res.status(201).json({ data: preparedUser });
   } catch (error) {
     next(error);
@@ -50,6 +49,24 @@ module.exports.getUserById = async (req, res, next) => {
     res.status(200).send({ date: foundUserById });
   } catch (error) {
     next(error);
+  }
+};
+
+module.exports.getUserTasks = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    //знаходимо юзера
+    const foundUser = await User.findByPk(id);
+    if (!foundUser) {
+      return next(createHttpError(404, 'User not found'));
+    }
+    const foundUserTasks = await foundUser.getTasks({
+      raw: true,
+      attributes: { exclude: ['createdAt', 'updatedAt'] },   //-параметри, які я не хочу відображати
+    });
+    res.status(200).send({ data: foundUserTasks });
+  } catch (err) {
+    next(err);
   }
 };
 

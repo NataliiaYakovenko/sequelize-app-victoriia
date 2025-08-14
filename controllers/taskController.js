@@ -2,19 +2,17 @@ const createHttpError = require('http-errors');
 const { Task } = require('../models/Task');
 const { User } = require('../models/User');
 
-module.exports.getUserTasks = async (req, res, next) => {
-  const { id } = req.params;
+module.exports.getTasks = async (req, res, next) => {
   try {
-    //знаходимо юзера
-    const foundUser = await User.findByPk(id);
-    if (!foundUser) {
-      return next(createHttpError(404, 'User not found'));
-    }
-    const foundUserTasks = await foundUser.getTasks({
+    const foundTasks = await Task.findAll({
       raw: true,
-      atributes: { exclude: ['createdAt', 'updatedAt'] },   //-параметри, які я не хочу відображати
+      atributes: { exclude: ['createdAt', 'updatedAt'] },
+      include: {
+        model: User,
+        attributes: ['firstName', 'lastName'],
+      },
     });
-    res.status(200).send({ data: foundUserTasks });
+    res.status(200).send({ data: foundTasks });
   } catch (err) {
     next(err);
   }
